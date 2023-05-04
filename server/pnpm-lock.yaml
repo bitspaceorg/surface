@@ -1,0 +1,13 @@
+lockfileVersion: 5.4
+
+specifiers:
+  gibberish: ^0.1.2
+
+dependencies:
+  gibberish: 0.1.2
+
+packages:
+
+  /gibberish/0.1.2:
+    resolution: {integrity: sha512-E8jr5W/Std5zm9KkF6NPJr7JfQSjqpdVAE/nDK5MdVmmWj1lcHUeOsEwAW3ASKp4qe6Da7LRtHAxrsWXy86wVg==}
+    dev: false

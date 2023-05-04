@@ -1,0 +1,41 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider          = "postgresql"
+    url               = env("DATABASE_URL")
+    directUrl         = env("DIRECT_URL")
+}
+
+model User {
+    id        String        @id @default(cuid())
+    email     String        @unique
+    username  String
+    password  String
+    image     String        @default("https://media.discordapp.net/attachments/1098805680045043813/1102791647592456212/default-pfp.png?width=200&height=200")
+    createdAt DateTime      @default(now())
+    updatedAt DateTime      @updatedAt @default(now())
+    concept   UserConcept[]
+}
+
+model UserConcept {
+    id        String        @id @default(cuid())
+    isOwner   Boolean       @default(false)
+    isEdit    Boolean       @default(false)
+    xMouse    Int
+    yMouse    Int
+    user      User?         @relation(fields: [userId], references: [id])
+    concept   Concept?      @relation(fields: [conceptId], references: [id])
+    userId    String?
+    conceptId String?
+}
+
+model Concept {
+    id        String        @id @default(cuid())
+    name      String
+    metadata  String
+    createdAt DateTime      @default(now())
+    updatedAt DateTime      @updatedAt @default(now())
+    user      UserConcept[]
+}
