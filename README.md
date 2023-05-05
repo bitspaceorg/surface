@@ -56,9 +56,9 @@ https://user-images.githubusercontent.com/50259284/235841808-ce744859-2fc6-4268-
 **Paste the below**
 
 ```
-    DIRECT_URL = "postgres://postgres:[PROJECT_PASSWORD]@db.[PROJECT_ID].supabase.co:5432/postgres"
+DIRECT_URL = "postgres://postgres:[PROJECT_PASSWORD]@db.[PROJECT_ID].supabase.co:5432/postgres"
  
-    DATABASE_URL = "postgres://postgres:[PROJECT_PASSWORD]@db.[PROJECT_ID].supabase.co:6543/postgres?pgbouncer=true"
+DATABASE_URL = "postgres://postgres:[PROJECT_PASSWORD]@db.[PROJECT_ID].supabase.co:6543/postgres?pgbouncer=true"
 ```
 
 Run the following command in root dir
