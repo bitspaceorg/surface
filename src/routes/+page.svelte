@@ -13,7 +13,7 @@
     <div class="w-full h-[550px] p-10 overflow-scroll flex flex-row items-center justify-center flex-wrap">
         {#each $user.concept as value, idx}
             <div aria-hidden="true" class="cursor-pointer m-2 flex flex-col items-start justify-center" on:click={() => goto(`/concept/${value.concept.id}`)}>
-                <div class="mt-2">{value.concept.name.toUpperCase()}</div>
+                <div class="mt-2">{value.concept.name.slice(0,27).toUpperCase()}{value.concept.name.length >= 27 ? "...":""}</div>
                 {#if value.concept.metadata.length}
                     <img class="hover-img hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] bg-white transition-all hover:border-4 border-2 border-black w-[350px] h-[200px] object-contain" src={value.concept.metadata} alt="key" />
                 {:else}
