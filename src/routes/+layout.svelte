@@ -3,11 +3,14 @@
 	import {onMount} from 'svelte';
     import { notification } from '../libs/stores/notification';
     import { requestAccess } from '../libs/stores/request-access';
+    import { mousePopup } from '../libs/stores/mouse-popup';
+    import { mouseCoords } from '../libs/stores/mouse-coords';
     import { share } from '../libs/stores/share';
 	import Loading from '../libs/components/loading/index.svelte';
     import Nav from '../libs/components/navbar/concept/index.svelte';
     import Notification from '../libs/components/notification/index.svelte';
     import RequestAccess from '../libs/components/notification/request-access/index.svelte';
+    import MousePopup from '../libs/components/notification/mouse-popup/index.svelte';
     import Share from '../libs/components/notification/share/index.svelte';
     import { getSocket } from '../libs/utils/socket';
 	import { page } from '$app/stores';
@@ -25,9 +28,11 @@
         getSocket()
     })
 
+    $: console.log($mouseCoords)
+
 </script>
 
-<div class="font-primary w-screen h-screen flex flex-col items-center justify-start">
+<div on:mousemove={(e) => mouseCoords.set({x: e.clientX, y: e.clientY})} class="font-primary w-screen h-screen flex flex-col items-center justify-start">
 	{#if $user === null && !['/auth/login', '/auth/signup'].includes($page?.route?.id || "")}
 		<Loading />
 	{:else}
@@ -37,6 +42,9 @@
         {/if}
         {#if $share.show}
             <Share />
+        {/if}
+        {#if $mousePopup.show}
+            <MousePopup />
         {/if}
         {#if $requestAccess.show}
     	    <RequestAccess />

@@ -1,15 +1,19 @@
 <script lang='ts'>
 	import {page} from "$app/stores";
     import {colors} from "../../../stores/colors";
-    import jwt from "jwt-simple";
+    import Crypto from "crypto-js";
+    import {CLIENT_URL} from "../../../utils/constants";
+	import {mousePopup} from "../../../stores/mouse-popup";
 
     let CODE: string = $page.params.id;
     let value: boolean = false;
 
-    const token = jwt.encode({code: CODE, edit: true}, "RAHULNAVNEETH-SURFACE")
-    console.log(token);
+    
+    $: if(value) CODE = Crypto.AES.encrypt(JSON.stringify({code: CODE, edit: true}), "RAHULNAVNEETH-SURFACE").toString()
+    else CODE = $page.params.id;
 
-    // $: if(value) CODE = jwt.sign({code: CODE, edit: true}, "RAHULNAVNEETH-SURFACE")
+    $: if(value) console.log(Crypto.AES.decrypt(CODE, "RAHULNAVNEETH-SURFACE").toString(Crypto.enc.Utf8));
+
 </script>
 
 <div class="absolute w-screen h-screen flex flex-col items-center justify-center">
@@ -17,8 +21,11 @@
         <div style="background: {$colors[1]} ;" class="w-full text-xl flex flex-col items-center justify-center h-[50px] font-bold">SHARE CODE</div>
         <div class="text-xl h-[50px] w-full p-4 font-bold flex flex-col items-center justify-center">
             <div class="flex flex-row items-center justify-center w-full">
-                <div class="mx-4 h-[50px] flex flex-col items-center justify-center">{CODE}</div>
-                <i aria-hidden="true" on:click={() => navigator.clipboard.writeText(CODE)} class="far fa-copy cursor-pointer"></i>
+                <div class="mx-4 h-[50px] flex flex-col items-center justify-center">{CODE.slice(0, 27)}{CODE.length > 27 ? "..." : ""}</div>
+                <i aria-hidden="true" on:click={() => {
+                        navigator.clipboard.writeText(`${CLIENT_URL}/concept/${CODE}`);
+                        mousePopup.set({show: true, message: "COPIED TO CLIPBOARD!"})
+                    }} class="far fa-copy cursor-pointer"></i>
             </div>
         </div>
     </div>
