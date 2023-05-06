@@ -18,7 +18,6 @@ specifiers:
   body-parser: ^1.20.2
   cookie-parser: ^1.4.6
   cors: ^2.8.5
-  crypto: ^1.0.1
   crypto-js: ^4.1.1
   express: ^4.18.2
   express-jwt: ^8.4.1
@@ -29,6 +28,7 @@ specifiers:
   jsrsasign: ^10.8.6
   jsrsasign-util: ^1.0.5
   jwt-client: ^0.2.1
+  jwt-simple: ^0.5.6
   peerjs: ^1.4.7
   postcss: ^8.4.21
   prettier: ^2.8.0
@@ -57,7 +57,6 @@ dependencies:
   body-parser: 1.20.2
   cookie-parser: 1.4.6
   cors: 2.8.5
-  crypto: 1.0.1
   crypto-js: 4.1.1
   express: 4.18.2
   express-jwt: 8.4.1
@@ -68,6 +67,7 @@ dependencies:
   jsrsasign: 10.8.6
   jsrsasign-util: 1.0.5
   jwt-client: 0.2.1
+  jwt-simple: 0.5.6
   peerjs: 1.4.7
   prisma: 4.13.0
   sign: link:jose-node-cjs-runtime/jwt/sign
@@ -983,11 +983,6 @@ packages:
     resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
     dev: false
 
-  /crypto/1.0.1:
-    resolution: {integrity: sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==}
-    deprecated: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
-    dev: false
-
   /cssesc/3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
@@ -1584,6 +1579,11 @@ packages:
 
   /jwt-client/0.2.1:
     resolution: {integrity: sha512-TGNCdhPtr+GQWX1IweESBN8P/5kobiOC9Q07UntpZ90JwSeLaqtT0vgblTkxZfMa8U5vLxmpNyjRq9I6ZHzxOw==}
+    dev: false
+
+  /jwt-simple/0.5.6:
+    resolution: {integrity: sha512-40aUybvhH9t2h71ncA1/1SbtTNCVZHgsTsTgqPUxGWDmUDrXyDf2wMNQKEbdBjbf4AI+fQhbECNTV6lWxQKUzg==}
+    engines: {node: '>= 0.4.0'}
     dev: false
 
   /kleur/4.1.5:

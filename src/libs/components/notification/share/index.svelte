@@ -1,12 +1,12 @@
 <script lang='ts'>
 	import {page} from "$app/stores";
     import {colors} from "../../../stores/colors";
-    import Crypto from "crypto-js";
+    import jwt from "jwt-simple";
 
     let CODE: string = $page.params.id;
     let value: boolean = false;
 
-    const token = Crypto.sh256(JSON.stringify({code: CODE, edit: true})).toString();
+    const token = jwt.encode({code: CODE, edit: true}, "RAHULNAVNEETH-SURFACE")
     console.log(token);
 
     // $: if(value) CODE = jwt.sign({code: CODE, edit: true}, "RAHULNAVNEETH-SURFACE")
