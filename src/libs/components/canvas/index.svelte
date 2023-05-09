@@ -1,7 +1,9 @@
 <script>
     import {page} from "$app/stores";
     import { onDestroy, onMount } from "svelte";
+	import {colors} from "../../stores/colors";
 	import {concept} from "../../stores/concepts";
+	import {darkMode} from "../../stores/darkmode";
 	import {notification} from "../../stores/notification";
 	import {user} from "../../stores/user";
     import { ws } from "../../stores/ws";
@@ -27,6 +29,10 @@
         const x = event.offsetX;
         const y = event.offsetY;
         context.beginPath();
+        // context.strokeStyle = $colors[5]; 
+        context.strokeStyle = $darkMode ? "#FFF" : "#000";
+        context.lineWidth = 1;
+        context.lineCap = "round";
         context.moveTo(lastX, lastY);
         context.lineTo(x, y);
         context.stroke();
@@ -61,6 +67,7 @@
             context.drawImage(img, 0, 0);
         }
 
+
         context.lineWidth = 100;
         context.lineJoin = "round";
         context.lineCap = "round";
@@ -82,12 +89,18 @@
 </script>
 
 <div class="w-screen h-full overflow-scroll">
-    <canvas on:mouseup={() => {$ws.emit("save-concept", {id: $page.params.id, data: canvas.toDataURL()})}} id="myCanvas"></canvas>
+    <canvas id="myCanvas" class="{$darkMode ? 'myCanvas-dark': 'myCanvas'}" on:mouseup={() => {$ws.emit("save-concept", {id: $page.params.id, data: canvas.toDataURL()})}}></canvas>
 </div>
 <style>
-    #myCanvas {
+    .myCanvas {
         background-color: #fff;
         background-image: radial-gradient(rgb(192, 197, 206) 1px, white 1px);
+        background-size: 15px 15px;
+    }
+
+    .myCanvas-dark{
+        background-color: rgb(17, 20, 26);
+        background-image: radial-gradient(rgb(58, 62, 69) 1px, rgb(17, 20, 26) 1px);
         background-size: 15px 15px;
     }
 </style>

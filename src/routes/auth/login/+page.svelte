@@ -1,6 +1,7 @@
 <script lang='ts'>
 	import {goto} from "$app/navigation";
 	import axios from "axios";
+	import {darkMode} from "../../../libs/stores/darkmode";
 	import {notification} from "../../../libs/stores/notification";
 	import {user} from "../../../libs/stores/user";
     import {SERVER_URL} from "../../../libs/utils/constants";
@@ -32,7 +33,7 @@
                 goto("/")
             }catch(e){
                 // @ts-ignore
-                notification.set({message: e.response.data.message, type: "ERROR", show: true})
+                notification.set({message: e.response.data.message.toUpperCase(), type: "ERROR", show: true})
             }
         }
         isLoading = false;
@@ -40,19 +41,19 @@
 
 </script>
 
-<div id="bg" class="w-full h-full flex flex-col items-center justify-center">
-    <div class="p-12 flex flex-col items-center justify-center bg-white shadow-2xl border-2 border-black">
+<div class="{$darkMode ? 'bg-dark' : 'bg'} w-full h-full flex flex-col items-center justify-center">
+    <form on:submit|preventDefault class="p-12 flex flex-col items-center justify-center dark:bg-darkblack bg-white dark:text-white shadow-2xl border-2 dark:border-white border-black">
         <div>
             <div class="w-[350px] h-[80px] my-4 flex flex-col items-start justify-center">
                 <label for="email" class="text-xl font-black">EMAIL</label>
-                <input bind:value={EMAIL} id="email" class="w-full h-[50px] outline-none text-xl font-black py-2 px-4 border-black border-2" placeholder="xxxxx@gmail.com">
+                <input bind:value={EMAIL} id="email" class="w-full h-[50px] outline-none text-xl dark:border-white dark:bg-black font-black py-2 px-4 border-black border-2" placeholder="xxxxx@gmail.com">
             </div>
             <div class="w-[350px] h-[80px] flex flex-col items-start justify-center">
                 <label for="password" class="text-xl font-black">PASSWORD</label>
-                <input bind:value={PASSWORD} id="password" type="password" class="w-[350px] h-[50px] outline-none text-xl font-black py-2 px-4 border-black border-2" placeholder="* * * * *">
+                <input bind:value={PASSWORD} id="password" type="password" class="w-[350px] h-[50px] dark:border-white dark:bg-black outline-none text-xl font-black py-2 px-4 border-black border-2" placeholder="* * * * *">
             </div>
         </div>
-        <button on:click={handleLogin} class="transition-all {!isLoading ? 'hover:pl-6' : ''} w-[350px] h-[50px] mt-8 outline-none text-xl text-white bg-black p-2 my-2 border-black border-2">
+        <button type="submit" on:click={handleLogin} class="transition-all {!isLoading ? 'hover:pl-6' : ''} w-[350px] h-[50px] mt-8 outline-none text-xl text-white bg-black p-2 my-2 dark:bg-white dark:text-black dark:border-white border-black border-2">
             {#if !isLoading}
                 SIGNIN &rarr;
             {:else}
@@ -65,17 +66,24 @@
             {/if}
         </button>
         - OR -
-        <button disabled class="disabled:bg-gray-200 disabled:hover:pl-2 transition-all hover:pl-6 w-[350px] h-[50px] flex flex-row items-center justify-center mt-2 outline-none text-xl p-2 my-2 border-black border-2">
+        <button disabled class="dark:disabled:border-0 dark:disabled:text-white dark:disabled:bg-black disabled:bg-gray-200 dark:border-white dark:bg-white dark:text-black disabled:hover:pl-2 transition-all hover:pl-6 w-[350px] h-[50px] flex flex-row items-center justify-center mt-2 outline-none text-xl p-2 my-2 border-black border-2">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/706px-Google_%22G%22_Logo.svg.png" alt="google-png" class="w-[20px] h-[20px] mx-4">SIGNIN WITH GOOGLE &rarr;
             </button>
-    </div>
-    <a href="/auth/signup" class="mt-10 text-xl w-[450px] text-end px-2">REGISTER?</a>
+    </form>
+    <a href="/auth/signup" class="mt-10 text-xl w-[450px] text-end px-2 dark:text-white">REGISTER?</a>
 </div>
 
 <style>
-    #bg {
+    .bg {
         background-color: #fff;
         background-image: radial-gradient(rgb(192, 197, 206) 1px, white 1px);
         background-size: 15px 15px;
     }
+
+    .bg-dark {
+        background-color: rgb(17, 20, 26);
+        background-image: radial-gradient(rgb(58, 62, 69) 1px, rgb(17, 20, 26) 1px);
+        background-size: 15px 15px;
+    }
+
 </style>

@@ -5,17 +5,20 @@
 	import {page} from "$app/stores";
     import {concept} from "../../../stores/concepts";
     import {requestIsLoading} from "../../../stores/notification";
+	import {darkMode} from "../../../stores/darkmode";
 </script>
 
-<div class="absolute w-screen h-screen flex flex-col items-center justify-center">
-    <div class="w-[400px] h-[200px] flex shadow-lg divide-y-2 divide-black border-2 border-black flex-col bg-white items-center justify-center">
-        <div style="background: {$colors[4]} ;" class="w-full text-xl flex flex-col items-center justify-center h-[100px] font-bold">{$requestAccess.message}</div>
-        <div class="text-xl h-[100px] font-bold flex divide-x-2 divide-black flex-row items-center justify-center">
-            <button on:click={() => {
+<div aria-hidden="true" on:click={() => requestAccess.set({requestId: "", message: "", show: false}) }
+    class="absolute w-screen h-screen flex flex-col items-center justify-center">
+    <div style="border-color: {$darkMode ? $colors[4] : 'black'};" class="w-[400px] h-[200px] flex shadow-lg border-2 flex-col bg-white items-center justify-center">
+        <div style="background: {$colors[4]} ; border-color: {$darkMode ? $colors[4] : 'black'};"
+            class="w-full border-b-2 text-xl flex flex-col items-center justify-center h-[100px] font-bold">{$requestAccess.message}</div>
+        <div class="text-xl h-[100px] font-bold flex dark:bg-darkblack dark:text-white flex-row items-center justify-center">
+            <button on:click|stopPropagation={() => {
                 // @ts-ignore
                 requestIsLoading.set(true)
                 $ws.emit("accept-access", {id: $page.params.id, requestUserId: $requestAccess.requestId, userConceptId: $concept.user.find((i) => i.userId === $requestAccess.requestId).id})
-            }} class="hover:bg-gray-100 transition-all w-[200px] h-full flex flex-col items-center justify-center">
+            }} style="border-color: {$darkMode ? $colors[4] : 'black'};" class="hover:bg-gray-100 border-r-2 transition-all w-[200px] h-full flex flex-col items-center justify-center">
             {#if $requestIsLoading}
                 <div class="w-full flex flex-col items-center justify-center" role="status">
                     <svg aria-hidden="true" class="w-[20px] h-[20px] ext-gray-200 animate-spin dark:text-black fill-white" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

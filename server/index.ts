@@ -6,6 +6,7 @@ import http from 'http';
 import jwt from 'jsonwebtoken'
 import cookieParser from "cookie-parser";
 import {CLIENT_URL} from "./utils/constants";
+import Crypto from "crypto-js";
 
 import { PrismaClient, User } from '@prisma/client'
 import {planeCanvas} from "./utils/planeCanvas";
@@ -127,16 +128,23 @@ io.on("connection", (socket) => {
     console.log("New connection sustained")
 
     socket.on('concept-init', async(res: {id: string, name: string, usid: string}) => {
-        socket.emit(`on-init-${res.id}`);
+        let EDIT = false;
+        let RES_ID = res.id;
+        try{
+            const {code, edit} = JSON.parse(Crypto.AES.decrypt(res.id.replace("-", "/"), "RAHULNAVNEETH-SURFACE").toString(Crypto.enc.Utf8))
+            RES_ID = code;
+            EDIT = edit;
+        }catch(e){}
+
         const isExist = await prisma.concept.findUnique({
             where: {
-                id: res.id
+                id: RES_ID
             }
         })
         if(!isExist){
             await prisma.concept.create({
                 data : {
-                    id: res.id,
+                    id: RES_ID,
                     metadata: planeCanvas,
                     name: "( UNTITLED )",
                     user: {
@@ -153,7 +161,7 @@ io.on("connection", (socket) => {
         }else{
             const userExist = await prisma.userConcept.findFirst({
                 where: {
-                    conceptId: res.id,
+                    conceptId: RES_ID,
                     userId: res.usid,
                 }
             })
@@ -163,9 +171,9 @@ io.on("connection", (socket) => {
                     data: {
                         xMouse: 100,
                         yMouse: 100,
-                        conceptId: res.id,
+                        conceptId: RES_ID,
                         userId: res.usid,
-                        isEdit: false,
+                        isEdit: EDIT,
                         isOwner: false,
                     }
                 })
@@ -174,7 +182,7 @@ io.on("connection", (socket) => {
 
         const data = await prisma.concept.findUnique({
             where: {
-                id: res.id,
+                id: RES_ID,
             },
             include: {
                 user: {
@@ -196,14 +204,15 @@ io.on("connection", (socket) => {
                 }
             }
         })
-        socket.broadcast.emit(`on-notif-${res.id}`, {message: `${res.name.toUpperCase()} JOINED`,type: "SUCCESS", show: true});
-        io.emit(`update-user-${res.id}-${res.usid}`, userData);
-        io.emit(`concept-init-${res.id}`, data, userData);
+
+        socket.broadcast.emit(`on-notif-${RES_ID}`, {message: `${res.name.toUpperCase()} JOINED`,type: "SUCCESS", show: true});
+        io.emit(`update-user-${RES_ID}-${res.usid}`, userData);
+        io.emit(`concept-init-${RES_ID}`, data, userData);
 
     });
 
     socket.on('on-draw', async(res: {id: string, data: any}) => {
-        io.emit(`concept-receive-${res.id}`, res.data);
+        socket.broadcast.emit(`concept-receive-${res.id}`, res.data);
     })
 
     socket.on("save-concept", async(res) => {
@@ -215,7 +224,6 @@ io.on("connection", (socket) => {
                 metadata: res.data
             }
         })
-        console.log(data)
     })
 
     socket.on('change-name', async(res :{id: string, name: string}) => {
