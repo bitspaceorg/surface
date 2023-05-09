@@ -2,6 +2,7 @@
 	import {colors} from "../../stores/colors";
 	import {notification} from "../../stores/notification";
     import { fly } from "svelte/transition";
+	import {darkMode} from "../../stores/darkmode";
 
     setTimeout(() => {
         $notification.show = false;
@@ -9,7 +10,8 @@
 
 </script>
 
-<div transition:fly={{x: -100}} class="absolute top-[90px] left-[50px] z-[20] flex flex-row items-center justify-start border-2 border-black w-[400px] bg-white h-[75px]">
+<div transition:fly={{x: -100}} style="border-color: {$darkMode ? $notification.type === 'ERROR' ? $colors[5] : $notification.type === 'WARNING' ? $colors[4] : $colors[0] : 'black'};"
+    class="absolute top-[90px] left-[50px] z-[20] flex flex-row items-center justify-start border-2 w-[400px] dark:bg-darkblack dark:text-white bg-white h-[75px]">
     {#if $notification.type === 'ERROR'}
         <div style={`background: ${$colors[5]};`} class="w-[75px] border-r-2 border-black h-full flex flex-col items-center justify-center text-black">
             <span class="text-2xl">!</span>
@@ -23,6 +25,6 @@
             <span class="text-2xl">!</span>
         </div>
     {/if}
-    <div class="w-full text-center">{$notification.message}</div>
+    <div class="w-full dark:text-white text-center">{$notification.message}</div>
 </div>
 

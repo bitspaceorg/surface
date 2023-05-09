@@ -16,9 +16,9 @@ specifiers:
   bcrypt: ^5.1.0
   bcryptjs: ^2.4.3
   body-parser: ^1.20.2
+  buffer: ^6.0.3
   cookie-parser: ^1.4.6
   cors: ^2.8.5
-  crypto: ^1.0.1
   crypto-js: ^4.1.1
   express: ^4.18.2
   express-jwt: ^8.4.1
@@ -29,6 +29,7 @@ specifiers:
   jsrsasign: ^10.8.6
   jsrsasign-util: ^1.0.5
   jwt-client: ^0.2.1
+  jwt-simple: ^0.5.6
   peerjs: ^1.4.7
   postcss: ^8.4.21
   prettier: ^2.8.0
@@ -55,9 +56,9 @@ dependencies:
   bcrypt: 5.1.0
   bcryptjs: 2.4.3
   body-parser: 1.20.2
+  buffer: 6.0.3
   cookie-parser: 1.4.6
   cors: 2.8.5
-  crypto: 1.0.1
   crypto-js: 4.1.1
   express: 4.18.2
   express-jwt: 8.4.1
@@ -68,6 +69,7 @@ dependencies:
   jsrsasign: 10.8.6
   jsrsasign-util: 1.0.5
   jwt-client: 0.2.1
+  jwt-simple: 0.5.6
   peerjs: 1.4.7
   prisma: 4.13.0
   sign: link:jose-node-cjs-runtime/jwt/sign
@@ -730,6 +732,10 @@ packages:
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
+  /base64-js/1.5.1:
+    resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+    dev: false
+
   /base64id/2.0.0:
     resolution: {integrity: sha512-lGe34o6EHj9y3Kts9R4ZYs/Gr+6N7MCaMlIFA3F1R2O5/m7K06AxfSeO5530PEERE6/WyEg3lsuyw4GHlPZHog==}
     engines: {node: ^4.5.0 || >= 5.9}
@@ -826,6 +832,13 @@ packages:
 
   /buffer-equal-constant-time/1.0.1:
     resolution: {integrity: sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA==}
+    dev: false
+
+  /buffer/6.0.3:
+    resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
+    dependencies:
+      base64-js: 1.5.1
+      ieee754: 1.2.1
     dev: false
 
   /busboy/1.6.0:
@@ -981,11 +994,6 @@ packages:
 
   /crypto-js/4.1.1:
     resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
-    dev: false
-
-  /crypto/1.0.1:
-    resolution: {integrity: sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==}
-    deprecated: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
     dev: false
 
   /cssesc/3.0.0:
@@ -1468,6 +1476,10 @@ packages:
       safer-buffer: 2.1.2
     dev: false
 
+  /ieee754/1.2.1:
+    resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
+    dev: false
+
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -1584,6 +1596,11 @@ packages:
 
   /jwt-client/0.2.1:
     resolution: {integrity: sha512-TGNCdhPtr+GQWX1IweESBN8P/5kobiOC9Q07UntpZ90JwSeLaqtT0vgblTkxZfMa8U5vLxmpNyjRq9I6ZHzxOw==}
+    dev: false
+
+  /jwt-simple/0.5.6:
+    resolution: {integrity: sha512-40aUybvhH9t2h71ncA1/1SbtTNCVZHgsTsTgqPUxGWDmUDrXyDf2wMNQKEbdBjbf4AI+fQhbECNTV6lWxQKUzg==}
+    engines: {node: '>= 0.4.0'}
     dev: false
 
   /kleur/4.1.5:

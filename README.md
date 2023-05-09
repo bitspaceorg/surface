@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://cdn.discordapp.com/attachments/1098174922951495680/1098174923232510002/Bit_Space.png" width="100" alt="Logo"/><br/>
+    <img width="200px" src="https://user-images.githubusercontent.com/50259284/236601641-8eff537f-2bdf-4154-af19-09145d77a29c.jpg" />
     <h1 align="center">SURFACE</h1>
 		<img alt="Stargazers" src="https://img.shields.io/github/stars/bitspaceorg/surface?style=for-the-badge&logo=starship&color=C9CBFF&logoColor=D9E0EE&labelColor=302D41">
   <a href="https://github.com/RahulNavneeth">

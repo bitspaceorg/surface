@@ -1,5 +1,5 @@
 <script lang='ts'>
-    import Sidebar from '../../../libs/components/sidebar/index.svelte';
+    import Sidebar from '../../../libs/components/sidebar/right/index.svelte';
     import Canvas from '../../../libs/components/canvas/index.svelte';
     import { ws } from '../../../libs/stores/ws';
     import { notification, requestIsLoading } from '../../../libs/stores/notification';
@@ -93,8 +93,12 @@
 
 </script>
 
+<svelte:head>
+    <title>Concept - {$concept?.name || "( UNTITLED )"}</title>
+</svelte:head>
+
 {#if !$concept}
-    <div class="w-full h-full text-2xl flex flex-col items-center justify-center">
+    <div class="w-full dark:bg-black dark:text-white h-full text-2xl flex flex-col items-center justify-center">
         LOADING CANVAS {loadingDots}
     </div> 
 {:else}
@@ -108,7 +112,6 @@
                     </div>
                 {/if}
             {/each}
-            <!-- BRAINSTROM HERE BITCH -->
             <Canvas />
         </div>
         <Sidebar />
