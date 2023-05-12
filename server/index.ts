@@ -127,15 +127,8 @@ setInterval( async () => {
 io.on("connection", (socket) => {
     console.log("New connection sustained")
 
-    socket.on('concept-init', async(res: {id: string, name: string, usid: string}) => {
-        let EDIT = false;
-        let RES_ID = res.id;
-        try{
-            const {code, edit} = JSON.parse(Crypto.AES.decrypt(res.id.replace("-", "/"), "RAHULNAVNEETH-SURFACE").toString(Crypto.enc.Utf8))
-            RES_ID = code;
-            EDIT = edit;
-        }catch(e){}
-
+    socket.on('concept-init', async(res: {id: string, name: string, usid: string, edit: boolean}) => {
+        socket.emit(`on-init-${res.id}`);
         const isExist = await prisma.concept.findUnique({
             where: {
                 id: RES_ID
@@ -173,7 +166,7 @@ io.on("connection", (socket) => {
                         yMouse: 100,
                         conceptId: RES_ID,
                         userId: res.usid,
-                        isEdit: EDIT,
+                        isEdit: res.edit,
                         isOwner: false,
                     }
                 })

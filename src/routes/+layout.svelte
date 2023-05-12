@@ -42,28 +42,28 @@
 	{#if $user === null && !['/auth/login', '/auth/signup'].includes($page?.route?.id || "")}
 		<Loading />
 	{:else}
-    <div class="dark:bg-black bg-white relative flex flex-col items-center justify-center w-screen h-screen">
-        {#if $notification.show}
-    	    <Notification />
-        {/if}
-        {#if $share.show}
-            <Share />
-        {/if}
-        {#if $mousePopup.show}
-            <MousePopup />
-        {/if}
-        {#if $requestAccess.show}
-    	    <RequestAccess />
-        {/if}
-        {#if $dropdown}
-            <Dropdown />
-        {/if}
-        {#if !['/auth/login', '/auth/signup'].includes($page?.route?.id || "")}
-            <Nav />
-        {/if}
-        <div class="{!['/auth/login', '/auth/signup'].includes($page?.route?.id || "") ? 'mt-[45px]': ''} w-full h-full">
-            <slot />
+        <div class="dark:bg-black bg-white relative flex flex-col items-center justify-center w-screen h-screen">
+            {#if $notification.show}
+        	    <Notification />
+            {/if}
+            {#if $share.show}
+                <Share />
+            {/if}
+            {#if $mousePopup.show}
+                <MousePopup />
+            {/if}
+            {#if $requestAccess.show}
+        	    <RequestAccess />
+            {/if}
+            {#if $dropdown}
+                <Dropdown />
+            {/if}
+            {#if !['/auth/login', '/auth/signup'].includes($page?.route?.id || "")}
+                <Nav />
+            {/if}
+            <div class="{!['/auth/login', '/auth/signup'].includes($page?.route?.id || "") ? 'mt-[45px]': ''} w-full h-full">
+                <slot />
+            </div>
         </div>
-    </div>
 	{/if}
 </div>
