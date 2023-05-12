@@ -12,7 +12,6 @@
     setInterval(() => {
         Math.floor(Math.random() * 2) ? isSpeaking = true : isSpeaking = false;
     }, 200)
-
 </script>
 
 <div class="absolute overflow-hidden right-[0px] h-[95%] flex flex-row items-center justify-center">
