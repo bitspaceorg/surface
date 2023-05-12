@@ -8,9 +8,16 @@
 	import { page } from '$app/stores';
 	import { user } from '../../../libs/stores/user';
 	import { concept } from '../../../libs/stores/concepts';
+	import {goto} from '$app/navigation';
+	import Crypto from 'crypto-js';
 
-    // @ts-ignore
-    $ws?.emit('concept-init', {id: $page.params.id, name: $user.username, usid: $user.id })
+    try{
+        const {code} = JSON.parse(Crypto.AES.decrypt($page.params.id.replace("-", "/"), "RAHULNAVNEETH-SURFACE").toString(Crypto.enc.Utf8))
+        $ws?.emit('concept-init', {id: code, name: $user?.username, usid: $user?.id, edit: true })
+        goto(`/concept/${code}`)
+    }catch(_){
+        $ws?.emit('concept-init', {id: $page.params.id, name: $user?.username, usid: $user?.id, edit: false })
+    }
 
     // @ts-ignore
     $ws.on(`on-init-${$page.params.id}`, (data) => {
@@ -32,12 +39,12 @@
     // @ts-ignore
     $ws.on(`change-user-cursor-${$page.params.id}`, (data) => {
         concept.update(value => {
-          const updatedUser = value.user.find(user => user.userId === data.usid)
-          if (updatedUser) {
-            updatedUser.xMouse = data.coords.x
-            updatedUser.yMouse = data.coords.y
-          }
-          return { ...value, user: [...value.user] }
+            const updatedUser = value.user.find(user => user.userId === data.usid)
+            if (updatedUser) {
+              updatedUser.xMouse = data.coords.x
+              updatedUser.yMouse = data.coords.y
+            }
+            return { ...value, user: [...value.user] }
         })
     })
 
